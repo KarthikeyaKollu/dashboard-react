@@ -3,7 +3,7 @@ import { SideBar } from "./components/SideBar"
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Home } from "./pages/Home"
 import { Companies } from "./pages/Companies"
-import { CreateCompanyPage } from './pages/CreateCompany';
+import { CreateCompanyPage } from './pages/AddCompany';
 import { NavBar } from './components/NavBar';
 import Tasks from './pages/Tasks';
 
@@ -18,11 +18,11 @@ const App = () => {
             <SideBar />
           </div>
 
-          <div class="flex-1 bg-slate-100 overflow-y-auto md:ml-64 lg:ml-64">
+          <div class="flex-1 bg-slate-100 overflow-y-auto md:ml-64 lg:ml-64 mb-11">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/companylist" element={<Companies />} />
-              <Route path="/createcompany" element={<CreateCompanyPage />} />
+              <Route path="/addcompany" element={<CreateCompanyPage />} />
               <Route path="/tasks" element={<Tasks/>} />
               {/* ... more routes */}
             </Routes>

@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Button, Drawer, Space, Avatar } from 'antd';
+import { Button, Drawer, Space, Avatar, Input, Form } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
+import avatar from "../assets/avatar.jpg"
 
 export const AvatarMenu = () => {
   const [open, setOpen] = useState(false);
@@ -20,7 +21,8 @@ export const AvatarMenu = () => {
 
   const menucontents=[
     {title:"My Profile", link:""},
-    {title:"Companies", link:""}
+    {title:"Account Settings", link:""},
+    {title:"Logout", link:""},
     ]
 
   return (
@@ -32,19 +34,55 @@ export const AvatarMenu = () => {
         </Space>
       </div>
       <Drawer
-        title="User"
+        title="Account Settings"
         placement={placement}
-        width={300}
+        width={500}
         onClose={onClose}
         open={open}
       >
-        {menucontents.map((item,index) => (
-            <li key={index}>
-                {item.title}
-            </li>
-        ))
-        }
-        
+       <div className=''>
+
+        <img src={avatar} alt="" width={100} className='mx-auto'/>
+
+        <Form
+        labelCol={{
+          span: 6,
+        }}
+        wrapperCol={{
+          span: 14,
+        }}
+        layout="horizontal"
+        disabled={false}
+        style={{
+          maxWidth: 600,
+        }}
+        className='p-3'
+      >
+        <Form.Item label="Full Name" name="input" >
+          <Input/>
+        </Form.Item>
+        <Form.Item label="Jobe Role" name="input" >
+          <Input/>
+        </Form.Item>
+        <Form.Item label="Email ID" name="emailid" rules={[{ type: 'email' }]}>
+          <Input/>
+        </Form.Item>
+        <Form.Item
+        name="phone"
+        label="Phone Number"
+        rules={[{message: 'Please input your phone number!' }]}
+        >
+        <Input/>
+        </Form.Item>
+        <Form.Item>
+          <Button type="" htmlType="submit" className='absolute right-0'>
+            Save
+          </Button>
+        </Form.Item>
+      </Form>
+
+       </div>
+
       </Drawer>
     </>
   );

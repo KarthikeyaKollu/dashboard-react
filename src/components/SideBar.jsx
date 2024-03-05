@@ -12,7 +12,7 @@ export const SideBar = ({onOptionClick}) => {
     const sidebar = [
         { title: "Home", link: "/", image: <HomeIcon /> },
         { title: "Companies", link: "/companylist", image: <BusinessIcon /> },
-        { title: "Add Company", link: "/createcompany", image: <AddBusinessIcon /> },
+        { title: "Add Company", link: "/addcompany", image: <AddBusinessIcon /> },
         { title: "Tasks", link: "/tasks", image: <AssignmentIcon /> },
 
     ]
@@ -24,7 +24,7 @@ export const SideBar = ({onOptionClick}) => {
     };
 
     return (
-        <div className='flex flex-col gap-3 p-2'>
+        <div className=' flex flex-col gap-3 p-2 h-screen'>
 
             {sidebar.map((item, index) => (
 

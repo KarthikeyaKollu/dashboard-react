@@ -5,9 +5,9 @@ import { LatestActivity } from "../components/home/LatestActivity"
 
 export const Home = () => {
   return (
-    <div className=''>
-      <div className='p-3'><Cards /></div>
-      <div className='p-3'><Graph_Up/> </div>
+    <div className='p-4'>
+      <div className='p-4'><Cards /></div>
+      <div className='p-4'><Graph_Up/> </div>
 
       <div> <LatestActivity /> </div>
 
@@ -15,5 +15,3 @@ export const Home = () => {
     </div>
   )
 }
-
-
