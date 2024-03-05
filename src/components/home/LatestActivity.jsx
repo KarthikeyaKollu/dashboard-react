@@ -4,7 +4,7 @@ import { Card, Col, Row } from 'antd';
 export const LatestActivity = () => {
   return (
     <div className='p-3'>
-      <Card bordered={false}>
+     <Card title={<div>LatestActivity</div>} bordered={false} style={{ width: "100%" }}>
       <ListPage/>
       </Card>
     </div>
