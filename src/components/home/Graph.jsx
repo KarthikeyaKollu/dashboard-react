@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card } from 'antd';
 import { Area,Line } from '@ant-design/plots';
-
+import SsidChartIcon from '@mui/icons-material/SsidChart'
 export const Graph = () => {
   const data = [
     { year: '1991', value: 3 },
@@ -22,7 +22,7 @@ export const Graph = () => {
   };
 
   return (
-    <Card title="Card title" bordered={false} style={{ width: "100%" }}>
+    <Card title={<div><SsidChartIcon/> Graph</div>} bordered={false} style={{ width: "100%" }}>
       <Line {...config} />
     </Card>
   );

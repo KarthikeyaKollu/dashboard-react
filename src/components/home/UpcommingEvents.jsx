@@ -1,5 +1,6 @@
 import React from 'react'
 import { Card, List, Avatar } from 'antd';
+import EventIcon from '@mui/icons-material/Event'
 export const UpcommingEvents = () => {
   const data = [
     {
@@ -16,7 +17,7 @@ export const UpcommingEvents = () => {
     },
   ];
   return (
-    <Card title="Card title" bordered={false} style={{ width: "100%" }}>
+    <Card title={<div><EventIcon/> Upcoming Events</div>} bordered={false} style={{ width: "100%" }}>
       <List
         itemLayout="horizontal"
         dataSource={data}
