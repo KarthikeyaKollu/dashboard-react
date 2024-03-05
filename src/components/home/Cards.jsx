@@ -7,7 +7,8 @@ export const Cards = () => {
         
        {[1,2,3].map((item,index)=>(<Col key={index} xs={24} sm={8} >
           <Card bordered={false}>
-            Card content
+            <div>hello</div>
+            <div>10</div>
           </Card>
         </Col>))}
       </Row>
