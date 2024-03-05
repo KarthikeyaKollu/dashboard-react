@@ -16,6 +16,7 @@ import {
   TreeSelect,
   Upload,
 } from 'antd';
+
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 const normFile = (e) => {
@@ -26,20 +27,21 @@ const normFile = (e) => {
 };
 
 export const CreateCompany = ({}) => {
-  const [componentDisabled, setComponentDisabled] = useState(false);
 
   const onFinish = (values) => {
     console.log('Form values:', values);
   };
 
+  const prefixSelector = (
+    <Form.Item name="prefix" noStyle>
+      <Select style={{ width: 70 }}>
+        <Option value="91">+91</Option>
+      </Select>
+    </Form.Item>
+  );
+
   return (
     <>
-      <Checkbox
-        checked={componentDisabled}
-        onChange={(e) => setComponentDisabled(e.target.checked)}
-      >
-        Form disabled
-      </Checkbox>
       <Form
         labelCol={{
           span: 4,
@@ -48,78 +50,15 @@ export const CreateCompany = ({}) => {
           span: 14,
         }}
         layout="horizontal"
-        disabled={componentDisabled}
+        disabled={false}
         style={{
-          maxWidth: 600,
+          maxWidth: 1000,
         }}
         onFinish={onFinish}
+        className='mx-auto h-screen'
       >
-        <Form.Item label="Checkbox" name="disabled" valuePropName="checked">
-          <Checkbox>Checkbox</Checkbox>
-        </Form.Item>
-        <Form.Item label="Radio">
-          <Radio.Group>
-            <Radio value="apple"> Apple </Radio>
-            <Radio value="pear"> Pear </Radio>
-          </Radio.Group>
-        </Form.Item>
-        <Form.Item label="Input" name="input">
-          <Input />
-        </Form.Item>
-        <Form.Item label="Select" name="select">
-          <Select>
-            <Select.Option value="demo">Demo</Select.Option>
-          </Select>
-        </Form.Item>
-        <Form.Item label="TreeSelect" name="treeSelect">
-          <TreeSelect
-            treeData={[
-              {
-                title: 'Light',
-                value: 'light',
-                children: [
-                  {
-                    title: 'Bamboo',
-                    value: 'bamboo',
-                  },
-                ],
-              },
-            ]}
-          />
-        </Form.Item>
-        <Form.Item label="Cascader" name="cascader">
-          <Cascader
-            options={[
-              {
-                value: 'zhejiang',
-                label: 'Zhejiang',
-                children: [
-                  {
-                    value: 'hangzhou',
-                    label: 'Hangzhou',
-                  },
-                ],
-              },
-            ]}
-          />
-        </Form.Item>
-        <Form.Item label="DatePicker" name="datePicker">
-          <DatePicker />
-        </Form.Item>
-        <Form.Item label="RangePicker" name="rangePicker">
-          <RangePicker />
-        </Form.Item>
-        <Form.Item label="InputNumber" name="inputNumber">
-          <InputNumber />
-        </Form.Item>
-        <Form.Item label="TextArea" name="textArea">
-          <TextArea rows={4} />
-        </Form.Item>
-        <Form.Item label="Switch" name="switch" valuePropName="checked">
-          <Switch />
-        </Form.Item>
         <Form.Item
-          label="Upload"
+          label="Upload Company Logo"
           name="upload"
           valuePropName="fileList"
           getValueFromEvent={normFile}
@@ -143,11 +82,30 @@ export const CreateCompany = ({}) => {
             </button>
           </Upload>
         </Form.Item>
-        <Form.Item label="Button">
-          <Button>Button</Button>
+        <Form.Item label="Company Name" name="input" >
+          <Input className='sm:w-[50%] w-[60%]' />
         </Form.Item>
-        <Form.Item label="Slider" name="slider">
-          <Slider />
+        <Form.Item label="Description" name="description">
+        <TextArea rows={4} />
+        </Form.Item>
+        <Form.Item label="Date" name="datePicker">
+          <DatePicker />
+        </Form.Item>
+        <Form.Item label="Date Range" name="rangePicker">
+          <RangePicker />
+        </Form.Item>
+        <Form.Item label="Amount in Rupees" name="inputNumber">
+          <InputNumber />
+        </Form.Item>
+        <Form.Item label="Email ID" name="emailid" rules={[{ type: 'email' }]}>
+          <Input className='sm:w-[40%] w-[50%]' />
+        </Form.Item>
+        <Form.Item
+        name="phone"
+        label="Phone Number"
+        rules={[{ required: true, message: 'Please input your phone number!' }]}
+        >
+        <Input addonBefore={prefixSelector} className='sm:w-[40%] w-[50%]' />
         </Form.Item>
         <Form.Item label="ColorPicker" name="colorPicker">
           <ColorPicker />  <Button type="" htmlType="submit">
