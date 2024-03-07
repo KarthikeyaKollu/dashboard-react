@@ -3,7 +3,7 @@ import { CreateCompany } from "../components/companies/CreateCompany"
 import { Card } from 'antd';
 export const CreateCompanyPage = () => {
     return (
-        <div>
+        <div className='p-4'>
             <Card bordered={false}>
                 <CreateCompany />
                 

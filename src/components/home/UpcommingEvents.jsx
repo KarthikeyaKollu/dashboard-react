@@ -1,32 +1,25 @@
 import React from 'react'
 import { Card, List, Avatar } from 'antd';
 import EventIcon from '@mui/icons-material/Event'
+import {useList} from '../../contexts/Context'
+import { Badge, Calendar, Modal, Form, Input, Button, Radio } from 'antd';
 export const UpcommingEvents = () => {
-  const data = [
-    {
-      title: 'Ant Design Title 1',
-    },
-    {
-      title: 'Ant Design Title 2',
-    },
-    {
-      title: 'Ant Design Title 3',
-    },
-    {
-      title: 'Ant Design Title 4',
-    },
-  ];
+
+  const contextList = useList();
+  const data =contextList.tasks
+  console.log(contextList.tasks)
+  
   return (
-    <Card title={<div><EventIcon/> Upcoming Events</div>} bordered={false} style={{ width: "100%" }}>
+    <Card title={<div><EventIcon/> Upcoming Events</div>} bordered={false} style={{ width: "100%",height:"550px"  }}>
       <List
         itemLayout="horizontal"
         dataSource={data}
         renderItem={(item, index) => (
           <List.Item>
             <List.Item.Meta
-              avatar={<Avatar src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index}`} />}
-              title={<a href="https://ant.design">{item.title}</a>}
-              description="Ant Design, a refined"
+              title={ <Badge status={item.type} text={item.date} />}
+              description={item.content}
+              
             />
           </List.Item>
         )}
