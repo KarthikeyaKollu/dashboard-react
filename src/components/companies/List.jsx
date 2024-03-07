@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Avatar, Button, Input, List, Skeleton } from 'antd';
+import { Avatar, Button, Input, List, Skeleton, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 import { db } from '../firebaseConfig';
 import { getDatabase, ref as refdb, remove ,get} from 'firebase/database';
@@ -59,7 +61,7 @@ export const ListPage = () => {
         dataSource={filteredList}
         renderItem={item => (
           <List.Item
-            actions={[<a href={`/editcompany/${item.id}`} key="list-loadmore-edit">edit</a>, <a key="list-loadmore-more" onClick={()=>{deleteCompany(item.id)}} >delete</a>]}
+            actions={[<Tooltip title="Edit" color={"blue"} key={"blue"}><a href={`/editcompany/${item.id}`} key="list-loadmore-edit"><EditOutlinedIcon/></a></Tooltip>, <Tooltip title="Delete" color={"red"} key={"red"}><a key="list-loadmore-more" onClick={()=>{deleteCompany(item.id)}} ><DeleteOutlineOutlinedIcon/></a></Tooltip>]}
           >
             <Skeleton avatar title={false} loading={loading} active>
               <List.Item.Meta
