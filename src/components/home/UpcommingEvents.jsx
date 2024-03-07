@@ -8,7 +8,6 @@ export const UpcommingEvents = () => {
 
   const contextList = useList();
   const data =contextList.tasks
-  console.log(contextList.tasks)
   
   return (
    <Card title={<div><EventIcon/> Upcoming Events</div>} bordered={false} style={{ width: "100%",height:"550px"}} className='relative overflow-y-auto hide-scrollbar'>

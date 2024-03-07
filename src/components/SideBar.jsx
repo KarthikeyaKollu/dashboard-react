@@ -4,13 +4,13 @@ import { useLocation } from 'react-router-dom';
 import { Button } from 'antd';
 import BusinessIcon from '@mui/icons-material/Business';
 import AddBusinessIcon from '@mui/icons-material/AddBusiness';
-import HomeIcon from '@mui/icons-material/Home';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 
 export const SideBar = ({onOptionClick}) => {
     const location = useLocation();
     const sidebar = [
-        { title: "Home", link: "/", image: <HomeIcon /> },
+        { title: "Dashboard", link: "/", image: <DashboardIcon /> },
         { title: "Companies", link: "/companylist", image: <BusinessIcon /> },
         { title: "Add Company", link: "/createcompany", image: <AddBusinessIcon /> },
         { title: "Tasks", link: "/tasks", image: <AssignmentIcon /> },

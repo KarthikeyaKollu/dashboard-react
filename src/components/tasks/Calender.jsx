@@ -4,12 +4,17 @@ import FormItem from 'antd/es/form/FormItem';
 import { getDatabase, ref as refdb, set, onValue, get } from 'firebase/database';
 import { db } from '../firebaseConfig'
 import { useList } from '../../contexts/Context'
+import AddIcon from '@mui/icons-material/Add';
+import { Notification } from '../Notification';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+
 export const CalenderComponent = () => {
     const [visible, setVisible] = useState(false);
     const [task, setTask] = useState('');
     const [selectedDate, setSelectedDate] = useState('');
     const [tasks, setTasks] = useState([]);
     const [type, setType] = useState('');
+    const [alert, setAlert] = useState(false);
     const contextList = useList();
 
 
@@ -31,6 +36,8 @@ export const CalenderComponent = () => {
             await set(companiesRef, data);
 
             console.log("Data uploaded successfully!");
+            
+
         } catch (error) {
             console.error("Error uploading data:", error);
         }
@@ -69,6 +76,9 @@ export const CalenderComponent = () => {
         
         uploadData(tasks)
         setVisible(false);
+        setTask("")
+        setType("")
+        setAlert(true);
     };
 
     const handleCancel = () => {
@@ -91,8 +101,10 @@ export const CalenderComponent = () => {
                 ))}
                 <li>
                     <Button type="link" onClick={() => handleDateClick(value)}>
-                        Add Task
+                       <AddIcon fontSize='small' />
                     </Button>
+                  
+                
                 </li>
             </ul>
         );
@@ -105,7 +117,9 @@ export const CalenderComponent = () => {
 
     return (
         <>
+            <div className='ml-3 text-2xl font-semibold flex items-center gap-1 text-blue-400'><AssignmentIcon/>Tasks</div>
             <Calendar dateCellRender={dateCellRender} />
+        
             <Modal
                 title="Add Task"
                 visible={visible}
@@ -114,7 +128,7 @@ export const CalenderComponent = () => {
                     <Button key="cancel" onClick={handleCancel}>
                         Cancel
                     </Button>,
-                    <Button key="submit" type="primary" onClick={handleAddTask}>
+                    <Button key="submit"  onClick={handleAddTask}>
                         Add Task
                     </Button>,
                 ]}
@@ -133,7 +147,7 @@ export const CalenderComponent = () => {
                     </FormItem>
                 </Form>
             </Modal>
-            <div onClick={uploadData}><button> save </button></div>
+            {alert &&  <Notification type={"success"} message={"Task added successfully!"} /> }
         </>
     );
 };

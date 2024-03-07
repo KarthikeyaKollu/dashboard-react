@@ -3,13 +3,23 @@ import { Card, Col, Row } from 'antd';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import BusinessIcon from '@mui/icons-material/Business';
+import {useList} from "../../contexts/Context"
 
 export const Cards = () => {
 
-  const homecards=[{title:"Total Profits",desc:"1000",logo:<LocalAtmIcon fontSize='small'/>,color:"text-blue-500 bg-blue-200"},
+  const data= useList()
+  const nofCompanies= data.list.length
+  const totalAmount = data.list.reduce((total, item) => total + item.amount, 0);
+  const formattedTotalAmount = totalAmount.toLocaleString('en-IN', { style: 'currency', currency: 'INR' });
+
+
+  const homecards=[{title:"Total Profits",desc:formattedTotalAmount,logo:<LocalAtmIcon fontSize='small'/>,color:"text-blue-500 bg-blue-200"},
                    {title:"Total deals pending",desc:"32",logo:<PendingActionsIcon fontSize='small' />, color:"text-green-500 bg-green-200"},
-                   {title:"Number of companies",desc:"64",logo:<BusinessIcon fontSize='small' />, color:"text-orange-500 bg-orange-200"},
+                   {title:"Number of companies",desc:nofCompanies,logo:<BusinessIcon fontSize='small' />, color:"text-orange-500 bg-orange-200"},
   ]
+
+
+
 
   return (
     <div className='' >

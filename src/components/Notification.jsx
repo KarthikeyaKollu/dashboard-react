@@ -6,7 +6,7 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import { green } from '@mui/material/colors';
 
-export function Notification({type}) {
+export function Notification({type, message}) {
   const [state, setState] = React.useState({
     open: false,
     vertical: 'bottom', horizontal: 'right' 
@@ -32,7 +32,7 @@ export function Notification({type}) {
         sx={{backgroundColor:"green",borderRadius:"5px"}}
       >
         <div className='w-56'> <Alert variant="filled" severity={type}>
-        Saved
+        {message}
       </Alert></div>
 
       </Snackbar>
