@@ -22,7 +22,7 @@ export const Graph = () => {
   };
 
   return (
-    <Card title={<div><SsidChartIcon/> Graph</div>} bordered={false} style={{ width: "100%" }}>
+    <Card title={<div><SsidChartIcon/> Graph</div>} bordered={false} style={{ width: "100%",height:"550px" }}>
       <Line {...config} />
     </Card>
   );

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
+
+
 import {
   Button,
   Cascader,
@@ -17,6 +19,12 @@ import {
   Upload,
 } from 'antd';
 
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { db, storage } from "../firebaseConfig"
+
+import { ref as refdb, set } from 'firebase/database';
+import { v4 as uuidv4 } from 'uuid';
+
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 const normFile = (e) => {
@@ -26,10 +34,85 @@ const normFile = (e) => {
   return e?.fileList;
 };
 
-export const CreateCompany = ({}) => {
+export const CreateCompany = ({ }) => {
+  const [imageUrl, setImageUrl] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
 
-  const onFinish = (values) => {
-    console.log('Form values:', values);
+  const handleDateChange = (date, dateString) => {
+    setSelectedDate(dateString);
+    console.log(dateString)
+  };
+  async function uploadImageToFirebase(imageFile) {
+    try {
+      // Create a reference to the image file's location in Storage
+      // const storage = getStorage();
+      const storageRef = ref(storage, `company_logos/${imageFile.name}`);
+
+      // Start the upload task
+      const uploadTask = uploadBytesResumable(storageRef, imageFile);
+
+      // Track upload progress (optional)
+      uploadTask.on('state_changed',
+        (snapshot) => {
+          const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+          console.log(`Upload is ${progress}% done`);
+        },
+        (error) => {
+          console.error('Image upload failed:', error);
+          throw error; // Re-throw to allow for error handling in the calling code
+        },
+        () => {
+          // Get the download URL of the uploaded image
+          getDownloadURL(uploadTask.snapshot.ref)
+            .then((downloadURL) => {
+              setImageUrl(downloadURL)
+              return downloadURL; // Return the download URL for further use
+            });
+        }
+      );
+
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      throw error; // Re-throw to allow for error handling where the function is used
+    }
+  }
+
+  const uploadData = async (values) => {
+    console.log("uploading....")
+    const uuid = uuidv4()
+    try {
+      // Construct the data object to be uploaded
+      const data = {
+
+        ...values,
+        image: imageUrl,
+        id: uuid,
+        date: selectedDate
+      };
+
+      // Get a reference to the Realtime Database
+      // const db = getDatabase();
+      // Define the path where you want to store the data
+      const companiesRef = refdb(db, `companies/${uuid}`);
+
+      // Upload the data to the database
+      await set(companiesRef, data);
+
+      console.log("Data uploaded successfully!");
+    } catch (error) {
+      console.error("Error uploading data:", error);
+    }
+  }
+
+
+
+
+
+
+  const onFinish = async (values) => {
+    console.log(values)
+    uploadData(values)
+
   };
 
   const prefixSelector = (
@@ -43,6 +126,7 @@ export const CreateCompany = ({}) => {
   return (
     <>
       <Form
+
         labelCol={{
           span: 4,
         }}
@@ -59,11 +143,11 @@ export const CreateCompany = ({}) => {
       >
         <Form.Item
           label="Upload Company Logo"
-          name="upload"
+
           valuePropName="fileList"
           getValueFromEvent={normFile}
         >
-          <Upload action="/upload.do" listType="picture-card" maxCount={1}>
+          <Upload action={(e) => { uploadImageToFirebase(e) }} listType="picture-card" maxCount={1}>
             <button
               style={{
                 border: 0,
@@ -82,37 +166,36 @@ export const CreateCompany = ({}) => {
             </button>
           </Upload>
         </Form.Item>
-        <Form.Item label="Company Name" name="input" >
+        <Form.Item label="Company Name" name="Name" >
           <Input className='sm:w-[50%] w-[60%]' />
         </Form.Item>
         <Form.Item label="Description" name="description">
-        <TextArea rows={4} />
+          <TextArea rows={4} />
         </Form.Item>
-        <Form.Item label="Date" name="datePicker">
-          <DatePicker />
+        <Form.Item label="Date">
+          <DatePicker onChange={handleDateChange} />
         </Form.Item>
-        <Form.Item label="Date Range" name="rangePicker">
+        {/* <Form.Item label="Date Range" name="rangePicker">
           <RangePicker />
-        </Form.Item>
-        <Form.Item label="Amount in Rupees" name="inputNumber">
+        </Form.Item> */}
+        <Form.Item label="Amount in Rupees" name="amount">
           <InputNumber />
         </Form.Item>
         <Form.Item label="Email ID" name="emailid" rules={[{ type: 'email' }]}>
           <Input className='sm:w-[40%] w-[50%]' />
         </Form.Item>
         <Form.Item
-        name="phone"
-        label="Phone Number"
-        rules={[{ required: true, message: 'Please input your phone number!' }]}
+          name="phone"
+          label="Phone Number"
+          rules={[{ required: true, message: 'Please input your phone number!' }]}
         >
-        <Input addonBefore={prefixSelector} className='sm:w-[40%] w-[50%]' />
+          <Input addonBefore={prefixSelector} className='sm:w-[40%] w-[50%]' />
         </Form.Item>
-        <Form.Item label="ColorPicker" name="colorPicker">
-          <ColorPicker />  <Button type="" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item>
-       
+
+        <Button type="" htmlType="submit">
+          Submit
+        </Button>
+
       </Form>
     </>
   );
