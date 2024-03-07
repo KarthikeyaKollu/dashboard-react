@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
-
+import { useNavigate } from 'react-router';
 
 import {
   Button,
@@ -25,6 +25,8 @@ import { db, storage } from "../firebaseConfig"
 import { ref as refdb, set } from 'firebase/database';
 import { v4 as uuidv4 } from 'uuid';
 
+import {Notification} from "../Notification"
+
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 const normFile = (e) => {
@@ -37,6 +39,9 @@ const normFile = (e) => {
 export const CreateCompany = ({ }) => {
   const [imageUrl, setImageUrl] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [alert, setAlert] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleDateChange = (date, dateString) => {
     setSelectedDate(dateString);
@@ -90,28 +95,27 @@ export const CreateCompany = ({ }) => {
         date: selectedDate
       };
 
-      // Get a reference to the Realtime Database
-      // const db = getDatabase();
-      // Define the path where you want to store the data
+  
       const companiesRef = refdb(db, `companies/${uuid}`);
 
       // Upload the data to the database
       await set(companiesRef, data);
 
       console.log("Data uploaded successfully!");
+      setAlert(true)
+      setTimeout(() => {
+        navigate("/companylist");
+      }, 2000);
+      
     } catch (error) {
       console.error("Error uploading data:", error);
+      setAlert(false)
     }
   }
 
-
-
-
-
-
   const onFinish = async (values) => {
-    console.log(values)
-    uploadData(values)
+   console.log(values)
+   uploadData(values)
 
   };
 
@@ -192,11 +196,18 @@ export const CreateCompany = ({ }) => {
           <Input addonBefore={prefixSelector} className='sm:w-[40%] w-[50%]' />
         </Form.Item>
 
-        <Button type="" htmlType="submit">
-          Submit
-        </Button>
+   
+         
+            <Button type="" htmlType="submit">
+               Submit
+          </Button>
+       
 
-      </Form>
+          {alert &&  <Notification type={"success"} /> }
+       
+           </Form>
+       
+      
     </>
   );
 };
