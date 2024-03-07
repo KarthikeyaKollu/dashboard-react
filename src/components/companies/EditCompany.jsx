@@ -5,6 +5,8 @@ import { ref as refdb, get, set } from 'firebase/database';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { db, storage } from '../firebaseConfig';
 import { useParams } from 'react-router-dom';
+import {Notification} from "../Notification"
+
 const { TextArea } = Input;
 
 const normFile = (e) => {
@@ -93,7 +95,7 @@ export const UpdateCompany = () => {
                 date: selectedDate
             };
 
-            const companyRef = ref(db, `companies/${companyId}`);
+            const companyRef = refdb(db, `companies/${companyId}`);
             await set(companyRef, updatedData);
 
             console.log("Company updated successfully!");
