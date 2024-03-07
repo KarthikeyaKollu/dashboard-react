@@ -22,7 +22,9 @@ export const ListPage = () => {
   useEffect(() => {
     setList(contextList.list)
     console.log(list)
-    setLoading(false)
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
   })
 
 

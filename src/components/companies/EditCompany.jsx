@@ -185,7 +185,7 @@ export const UpdateCompany = () => {
                     Submit
                 </Button>
 
-                {alert &&  <Notification type={"success"} /> }
+                {alert &&  <Notification type={"success"} message={"Updated successfully!"} /> }
 
             </Form>}
         </div>

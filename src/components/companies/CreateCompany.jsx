@@ -26,6 +26,7 @@ import { ref as refdb, set } from 'firebase/database';
 import { v4 as uuidv4 } from 'uuid';
 
 import {Notification} from "../Notification"
+import AddBusinessIcon from '@mui/icons-material/AddBusiness';
 
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
@@ -129,6 +130,7 @@ export const CreateCompany = ({ }) => {
 
   return (
     <>
+      <div className='pb-6 md:p-3 md:pb-9 text-2xl font-semibold flex items-center gap-1 text-blue-400'><AddBusinessIcon/>Add a Company</div>
       <Form
 
         labelCol={{
@@ -203,7 +205,7 @@ export const CreateCompany = ({ }) => {
           </Button>
        
 
-          {alert &&  <Notification type={"success"} /> }
+          {alert &&  <Notification type={"success"} message={"Created successfully!"} /> }
        
            </Form>
        
