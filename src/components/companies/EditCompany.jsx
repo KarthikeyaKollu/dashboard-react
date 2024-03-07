@@ -17,7 +17,7 @@ const normFile = (e) => {
 export const UpdateCompany = () => {
     const [imageUrl, setImageUrl] = useState(null);
     const [selectedDate, setSelectedDate] = useState(null);
-
+    const [alert, setAlert] = useState(false);
     const [data, setData] = useState(null);
     const { id } = useParams();
     const companyId = id;
@@ -97,8 +97,10 @@ export const UpdateCompany = () => {
             await set(companyRef, updatedData);
 
             console.log("Company updated successfully!");
+            setAlert(true)
         } catch (error) {
             console.error("Error updating company:", error);
+            setAlert(false)
         }
     }
 
@@ -182,6 +184,8 @@ export const UpdateCompany = () => {
                 <Button type="" htmlType="submit">
                     Submit
                 </Button>
+
+                {alert &&  <Notification type={"success"} /> }
 
             </Form>}
         </div>
