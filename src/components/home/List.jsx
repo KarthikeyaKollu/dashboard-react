@@ -28,16 +28,13 @@ export const ListPage = () => {
       // loadMore={loadMore}
       dataSource={list}
       renderItem={(item) => (
-        <List.Item
-          actions={[<a key="list-loadmore-edit">edit</a>, <a key="list-loadmore-more">more</a>]}
-        >
+        <List.Item>
           <Skeleton avatar title={false} loading={item.loading} active>
             <List.Item.Meta
               avatar={<Avatar src={item.image} />}
               title={<a href="https://ant.design">{item.Name}</a>}
               description={item.description}
             />
-            <div>content</div>
           </Skeleton>
         </List.Item>
       )}
