@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button, Drawer, Space, Avatar, Input, Form } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-// import avatar from "../assets/avatar.jpg"
+import avatarpic from "../constants/avatarpic.jpeg"
 
 export const AvatarMenu = () => {
   const [open, setOpen] = useState(false);
@@ -30,7 +30,7 @@ export const AvatarMenu = () => {
       <div className='p-3' onClick={showDrawer}>
         <Space direction="vertical" size={16}/>
         <Space wrap size={16}>
-          <Avatar size="large" icon={<UserOutlined />} />
+          <Avatar size="large" src={avatarpic} />
         </Space>
       </div>
       <Drawer
